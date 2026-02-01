@@ -3,432 +3,283 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>登录 - Radio AI Healing</title>
+    <title>Radio.AI - 登录</title>
     <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #ff6b6b;
+            --light-bg: rgba(255, 255, 255, 0.1);
+            --dark-bg: rgba(0, 0, 0, 0.2);
+        }
+        
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
-
+        
         body {
-            font-family: 'Microsoft YaHei', Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             min-height: 100vh;
+            color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
         }
-
+        
         .login-container {
-            background: rgba(255, 255, 255, 0.95);
+            background: var(--light-bg);
+            backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 40px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             width: 100%;
             max-width: 400px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .logo {
             text-align: center;
+        }
+        
+        .logo {
             margin-bottom: 30px;
         }
-
+        
         .logo h1 {
-            color: #667eea;
-            font-size: 2em;
+            font-size: 2.5em;
+            background: linear-gradient(45deg, #fff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin-bottom: 10px;
         }
-
+        
         .logo p {
-            color: #666;
-            font-size: 14px;
+            opacity: 0.8;
+            font-size: 1.1em;
         }
-
+        
         .form-group {
             margin-bottom: 20px;
+            text-align: left;
         }
-
+        
         label {
             display: block;
             margin-bottom: 8px;
-            color: #333;
-            font-weight: 500;
+            font-weight: bold;
+            color: #fff;
         }
-
-        input {
+        
+        input[type="text"],
+        input[type="password"] {
             width: 100%;
             padding: 15px;
-            border: 2px solid #e1e5e9;
-            border-radius: 10px;
-            font-size: 16px;
-            transition: all 0.3s;
-            background: rgba(255, 255, 255, 0.8);
-        }
-
-        input:focus {
-            outline: none;
-            border-color: #667eea;
-            background: white;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        .password-group {
-            position: relative;
-        }
-
-        .toggle-password {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
             border: none;
-            color: #666;
-            cursor: pointer;
-            font-size: 18px;
-        }
-
-        .remember-forgot {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            font-size: 14px;
-        }
-
-        .remember-me {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .remember-me input {
-            width: auto;
-            margin: 0;
-        }
-
-        .forgot-link {
-            color: #667eea;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .forgot-link:hover {
-            color: #5a6fd8;
-        }
-
-        .login-btn {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            background: var(--dark-bg);
             color: white;
+            font-size: 16px;
+            outline: none;
+        }
+        
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 15px;
             border: none;
             border-radius: 10px;
             font-size: 16px;
-            font-weight: 600;
+            font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s;
-            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            margin-top: 10px;
         }
-
-        .login-btn:hover {
+        
+        .btn-login {
+            background: linear-gradient(45deg, var(--accent-color), #ee5a24);
+            color: white;
+        }
+        
+        .btn-login:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
-
-        .login-btn:active {
-            transform: translateY(0);
+        
+        .btn-register {
+            background: transparent;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
-
+        
+        .btn-register:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+        
         .divider {
-            text-align: center;
             margin: 25px 0;
             position: relative;
+            text-align: center;
         }
-
+        
         .divider::before {
-            content: '';
+            content: "";
             position: absolute;
             top: 50%;
             left: 0;
             right: 0;
             height: 1px;
-            background: #e1e5e9;
+            background: rgba(255, 255, 255, 0.2);
+            z-index: 1;
         }
-
+        
         .divider span {
-            background: rgba(255, 255, 255, 0.95);
+            position: relative;
+            z-index: 2;
+            background: var(--light-bg);
             padding: 0 15px;
-            color: #666;
-            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
         }
-
-        .social-login {
-            display: flex;
-            gap: 15px;
+        
+        .demo-login {
+            margin-top: 20px;
+        }
+        
+        .demo-text {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 15px;
+            font-size: 0.9em;
+        }
+        
+        .welcome-text {
             margin-bottom: 20px;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
         }
-
-        .social-btn {
-            flex: 1;
-            padding: 12px;
-            border: 2px solid #e1e5e9;
-            background: white;
+        
+        .features {
+            background: var(--dark-bg);
             border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: left;
         }
-
-        .social-btn:hover {
-            border-color: #667eea;
-            background: rgba(102, 126, 234, 0.05);
+        
+        .features h3 {
+            color: #fff;
+            margin-bottom: 10px;
+            font-size: 1.1em;
         }
-
-        .signup-link {
-            text-align: center;
-            color: #666;
-            font-size: 14px;
+        
+        .features ul {
+            padding-left: 20px;
+            margin: 0;
         }
-
-        .signup-link a {
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .signup-link a:hover {
-            color: #5a6fd8;
-        }
-
-        .error-message {
-            background: rgba(255, 107, 107, 0.1);
-            color: #ff6b6b;
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-size: 14px;
-            display: none;
-        }
-
-        .success-message {
-            background: rgba(76, 175, 80, 0.1);
-            color: #4caf50;
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-size: 14px;
-            display: none;
-        }
-
-        @media (max-width: 480px) {
-            .login-container {
-                padding: 30px 20px;
-            }
-            
-            .logo h1 {
-                font-size: 1.8em;
-            }
+        
+        .features li {
+            margin-bottom: 8px;
+            color: rgba(255, 255, 255, 0.9);
         }
     </style>
 </head>
 <body>
     <div class="login-container">
         <div class="logo">
-            <h1>🎵 Radio AI Healing</h1>
-            <p>欢迎回来，开启治愈之旅</p>
+            <h1>📻 Radio.AI</h1>
+            <p>智能语音电台</p>
         </div>
-
-        <div class="error-message" id="errorMessage"></div>
-        <div class="success-message" id="successMessage"></div>
-
+        
+        <div class="welcome-text">
+            欢迎使用 Radio.AI - 用语音控制的智能电台
+        </div>
+        
+        <div class="features">
+            <h3>功能特色：</h3>
+            <ul>
+                <li>语音控制播放</li>
+                <li>智能内容推荐</li>
+                <li>海量音频资源</li>
+                <li>个性化体验</li>
+            </ul>
+        </div>
+        
         <form id="loginForm">
             <div class="form-group">
                 <label for="username">用户名</label>
-                <input type="text" id="username" name="username" required placeholder="请输入用户名">
+                <input type="text" id="username" placeholder="请输入用户名" required>
             </div>
-
-            <div class="form-group password-group">
+            
+            <div class="form-group">
                 <label for="password">密码</label>
-                <input type="password" id="password" name="password" required placeholder="请输入密码">
-                <button type="button" class="toggle-password" id="togglePassword">👁️</button>
+                <input type="password" id="password" placeholder="请输入密码" required>
             </div>
-
-            <div class="remember-forgot">
-                <div class="remember-me">
-                    <input type="checkbox" id="remember" name="remember">
-                    <label for="remember">记住我</label>
-                </div>
-                <a href="#" class="forgot-link">忘记密码？</a>
-            </div>
-
-            <button type="submit" class="login-btn">登录</button>
+            
+            <button type="submit" class="btn btn-login">登录</button>
         </form>
-
+        
         <div class="divider">
             <span>或</span>
         </div>
-
-        <div class="social-login">
-            <button class="social-btn" id="wechatLogin">
-                💬 微信
-            </button>
-            <button class="social-btn" id="qqLogin">
-                🐧 QQ
-            </button>
-        </div>
-
-        <div class="signup-link">
-            还没有账号？<a href="#">立即注册</a>
+        
+        <button id="guestLogin" class="btn btn-register">游客模式访问</button>
+        
+        <div class="demo-login">
+            <div class="demo-text">演示账号: demo / 密码: radio123</div>
         </div>
     </div>
 
     <script>
-        // 登录表单处理
-        const loginForm = document.getElementById('loginForm');
-        const errorMessage = document.getElementById('errorMessage');
-        const successMessage = document.getElementById('successMessage');
-        const togglePassword = document.getElementById('togglePassword');
-        const passwordInput = document.getElementById('password');
-
-        // 密码显示/隐藏切换
-        togglePassword.addEventListener('click', () => {
-            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', type);
-            togglePassword.textContent = type === 'password' ? '👁️' : '👁️‍🗨️';
-        });
-
-        // 显示错误消息
-        function showError(message) {
-            errorMessage.textContent = message;
-            errorMessage.style.display = 'block';
-            successMessage.style.display = 'none';
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('loginForm');
+            const guestLoginBtn = document.getElementById('guestLogin');
             
-            setTimeout(() => {
-                errorMessage.style.display = 'none';
-            }, 5000);
-        }
-
-        // 显示成功消息
-        function showSuccess(message) {
-            successMessage.textContent = message;
-            successMessage.style.display = 'block';
-            errorMessage.style.display = 'none';
-            
-            setTimeout(() => {
-                successMessage.style.display = 'none';
-            }, 3000);
-        }
-
-        // 登录表单提交
-        loginForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            const remember = document.getElementById('remember').checked;
-
-            // 简单的验证
-            if (!username || !password) {
-                showError('请填写用户名和密码');
-                return;
-            }
-
-            // 显示加载状态
-            const loginBtn = document.querySelector('.login-btn');
-            const originalText = loginBtn.textContent;
-            loginBtn.textContent = '登录中...';
-            loginBtn.disabled = true;
-
-            try {
-                // 模拟API调用
-                await simulateLogin(username, password);
+            // 处理表单提交
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
                 
-                // 记住用户名
-                if (remember) {
-                    localStorage.setItem('rememberedUsername', username);
-                } else {
-                    localStorage.removeItem('rememberedUsername');
-                }
-
-                showSuccess('登录成功！正在跳转...');
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
                 
-                // 跳转到主页面
-                setTimeout(() => {
+                // 简单验证（实际应用中应使用安全的认证）
+                if ((username === 'demo' && password === 'radio123') || 
+                    (username.trim() !== '' && password.length >= 3)) {
+                    // 设置用户信息到本地存储
+                    localStorage.setItem('radioAIUser', JSON.stringify({
+                        username: username,
+                        loginTime: new Date().toISOString()
+                    }));
+                    
+                    // 跳转到主应用页面
                     window.location.href = 'index.html';
-                }, 2000);
-
-            } catch (error) {
-                showError(error.message);
-            } finally {
-                // 恢复按钮状态
-                loginBtn.textContent = originalText;
-                loginBtn.disabled = false;
-            }
-        });
-
-        // 模拟登录API
-        async function simulateLogin(username, password) {
-            // 模拟网络延迟
-            await new Promise(resolve => setTimeout(resolve, 1500));
-
-            // 简单的用户验证（实际应用中应该调用真实的API）
-            if (username === 'admin' && password === 'admin123') {
-                return { success: true, token: 'mock-jwt-token' };
-            } else if (username === 'demo' && password === 'demo123') {
-                return { success: true, token: 'mock-jwt-token' };
-            } else {
-                throw new Error('用户名或密码错误');
-            }
-        }
-
-        // 社交登录
-        document.getElementById('wechatLogin').addEventListener('click', () => {
-            showSuccess('微信登录功能开发中...');
-        });
-
-        document.getElementById('qqLogin').addEventListener('click', () => {
-            showSuccess('QQ登录功能开发中...');
-        });
-
-        // 忘记密码
-        document.querySelector('.forgot-link').addEventListener('click', (e) => {
-            e.preventDefault();
-            showSuccess('密码重置链接已发送到您的邮箱');
-        });
-
-        // 注册链接
-        document.querySelector('.signup-link a').addEventListener('click', (e) => {
-            e.preventDefault();
-            showSuccess('注册功能即将开放');
-        });
-
-        // 页面加载时检查记住的用户名
-        window.addEventListener('DOMContentLoaded', () => {
-            const rememberedUsername = localStorage.getItem('rememberedUsername');
-            if (rememberedUsername) {
-                document.getElementById('username').value = rememberedUsername;
-                document.getElementById('remember').checked = true;
-            }
-        });
-
-        // 输入框焦点效果
-        const inputs = document.querySelectorAll('input[type="text"], input[type="password"]');
-        inputs.forEach(input => {
-            input.addEventListener('focus', () => {
-                input.parentElement.style.transform = 'scale(1.02)';
+                } else {
+                    alert('用户名或密码错误！\n演示账号: demo / 密码: radio123');
+                }
             });
             
-            input.addEventListener('blur', () => {
-                input.parentElement.style.transform = 'scale(1)';
+            // 游客登录
+            guestLoginBtn.addEventListener('click', function() {
+                // 设置临时用户信息
+                localStorage.setItem('radioAIUser', JSON.stringify({
+                    username: '游客_' + Date.now(),
+                    loginTime: new Date().toISOString(),
+                    isGuest: true
+                }));
+                
+                // 跳转到主应用页面
+                window.location.href = 'index.html';
+            });
+            
+            // 回车键登录
+            document.getElementById('password').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    loginForm.dispatchEvent(new Event('submit'));
+                }
             });
         });
     </script>

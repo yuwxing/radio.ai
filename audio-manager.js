@@ -1,237 +1,143 @@
-// 音频管理器
+// Radio.AI 安全音频管理器
 class AudioManager {
     constructor() {
+        // 定义安全的音频分类和对应的URL
+        this.audioCategories = {
+            music: [
+                'https://www.soundjay.com/misc/sounds/test-tone-1.mp3',
+                'https://www.soundjay.com/misc/sounds/test-tone-2.mp3',
+                'https://www.soundjay.com/misc/sounds/test-tone-3.mp3',
+                'https://www.soundjay.com/misc/sounds/beep-01a.wav',
+                'https://www.soundjay.com/misc/sounds/beep-07.wav'
+            ],
+            news: [
+                'https://www.soundjay.com/misc/sounds/test-tone-1.mp3',
+                'https://www.soundjay.com/misc/sounds/test-tone-2.mp3',
+                'https://www.soundjay.com/misc/sounds/test-tone-3.mp3',
+                'https://www.soundjay.com/misc/sounds/beep-01a.wav',
+                'https://www.soundjay.com/misc/sounds/beep-07.wav'
+            ],
+            audiobook: [
+                'https://www.soundjay.com/misc/sounds/test-tone-1.mp3',
+                'https://www.soundjay.com/misc/sounds/test-tone-2.mp3',
+                'https://www.soundjay.com/misc/sounds/test-tone-3.mp3',
+                'https://www.soundjay.com/misc/sounds/beep-01a.wav',
+                'https://www.soundjay.com/misc/sounds/beep-07.wav'
+            ],
+            comedy: [
+                'https://www.soundjay.com/misc/sounds/test-tone-1.mp3',
+                'https://www.soundjay.com/misc/sounds/test-tone-2.mp3',
+                'https://www.soundjay.com/misc/sounds/test-tone-3.mp3',
+                'https://www.soundjay.com/misc/sounds/beep-01a.wav',
+                'https://www.soundjay.com/misc/sounds/beep-07.wav'
+            ],
+            general: [
+                'https://www.soundjay.com/misc/sounds/test-tone-1.mp3',
+                'https://www.soundjay.com/misc/sounds/test-tone-2.mp3',
+                'https://www.soundjay.com/misc/sounds/test-tone-3.mp3',
+                'https://www.soundjay.com/misc/sounds/beep-01a.wav',
+                'https://www.soundjay.com/misc/sounds/beep-07.wav'
+            ]
+        };
+        
+        // 用于存储当前播放的信息
         this.currentTrack = null;
-        this.playlist = [
-            {
-                title: '治愈系钢琴曲',
-                artist: 'AI Composer',
-                url: 'https://example.com/track1.mp3',
-                duration: '3:45'
-            },
-            {
-                title: '自然之声',
-                artist: 'Nature AI',
-                url: 'https://example.com/track2.mp3',
-                duration: '4:20'
-            },
-            {
-                title: '冥想音乐',
-                artist: 'Meditation AI',
-                url: 'https://example.com/track3.mp3',
-                duration: '5:10'
-            }
-        ];
-        this.currentTrackIndex = 0;
         this.isPlaying = false;
-        this.audioPlayer = document.getElementById('audioPlayer');
-        this.initializeEventListeners();
-        this.loadCurrentTrack();
     }
-
-    initializeEventListeners() {
-        const playBtn = document.getElementById('playBtn');
-        const pauseBtn = document.getElementById('pauseBtn');
-        const nextBtn = document.getElementById('nextBtn');
-
-        if (playBtn) {
-            playBtn.addEventListener('click', () => this.play());
+    
+    // 获取指定类型的音频URL
+    getAudioUrl(contentType = 'general', query = '') {
+        const category = this.audioCategories[contentType] || this.audioCategories.general;
+        const randomIndex = Math.floor(Math.random() * category.length);
+        return category[randomIndex];
+    }
+    
+    // 模拟音频搜索功能
+    async searchAudio(query) {
+        // 这里可以集成真实的音频API
+        // 目前返回模拟结果
+        const results = [];
+        
+        // 根据查询类型返回相应类型的结果
+        if (query.toLowerCase().includes('音乐') || query.toLowerCase().includes('歌')) {
+            results.push(
+                { id: 1, title: '轻松音乐 - 晨光森林', desc: '舒缓的自然音乐，适合放松心情', duration: '3:45', type: 'music', url: this.getAudioUrl('music') },
+                { id: 2, title: '流行音乐 - 本周热门', desc: '最新流行歌曲精选', duration: '4:20', type: 'music', url: this.getAudioUrl('music') },
+                { id: 3, title: '古典音乐 - 巴赫平均律', desc: '巴赫经典作品演奏', duration: '8:15', type: 'music', url: this.getAudioUrl('music') },
+                { id: 4, title: '轻音乐 - 雨声伴眠', desc: '雨声与轻柔音乐，助您入眠', duration: '15:30', type: 'music', url: this.getAudioUrl('music') },
+                { id: 5, title: '摇滚音乐 - 经典回顾', desc: '80年代经典摇滚合集', duration: '4:10', type: 'music', url: this.getAudioUrl('music') }
+            );
+        } else if (query.toLowerCase().includes('新闻') || query.toLowerCase().includes('资讯')) {
+            results.push(
+                { id: 1, title: '综合新闻 - 今日要闻', desc: '国内外重要新闻摘要', duration: '5:30', type: 'news', url: this.getAudioUrl('news') },
+                { id: 2, title: '财经新闻 - 今日市场动态', desc: '股市及经济新闻速递', duration: '4:15', type: 'news', url: this.getAudioUrl('news') },
+                { id: 3, title: '体育新闻 - 昨夜赛事回顾', desc: '昨夜重要体育赛事报道', duration: '3:50', type: 'news', url: this.getAudioUrl('news') },
+                { id: 4, title: '科技新闻 - 最新科技趋势', desc: '人工智能与科技发展动态', duration: '6:20', type: 'news', url: this.getAudioUrl('news') },
+                { id: 5, title: '健康资讯 - 养生知识', desc: '健康生活小贴士', duration: '4:45', type: 'news', url: this.getAudioUrl('news') }
+            );
+        } else if (query.toLowerCase().includes('广播剧') || query.toLowerCase().includes('故事') || query.toLowerCase().includes('小说')) {
+            results.push(
+                { id: 1, title: '睡前故事 - 星空传说', desc: '温馨睡前故事，助您安然入睡', duration: '12:40', type: 'audiobook', url: this.getAudioUrl('audiobook') },
+                { id: 2, title: '悬疑广播剧 - 迷雾追踪', desc: '引人入胜的悬疑故事', duration: '25:15', type: 'audiobook', url: this.getAudioUrl('audiobook') },
+                { id: 3, title: '经典名著 - 红楼梦选段', desc: '红楼梦经典片段演播', duration: '18:30', type: 'audiobook', url: this.getAudioUrl('audiobook') },
+                { id: 4, title: '科幻小说 - 未来世界', desc: '精彩科幻故事演播', duration: '32:10', type: 'audiobook', url: this.getAudioUrl('audiobook') },
+                { id: 5, title: '历史故事 - 古代传奇', desc: '中国古代历史故事', duration: '20:25', type: 'audiobook', url: this.getAudioUrl('audiobook') }
+            );
+        } else if (query.toLowerCase().includes('相声') || query.toLowerCase().includes('评书')) {
+            results.push(
+                { id: 1, title: '相声选段 - 经典作品', desc: '著名相声演员经典作品', duration: '15:20', type: 'comedy', url: this.getAudioUrl('comedy') },
+                { id: 2, title: '评书 - 三国演义选段', desc: '传统评书艺术表演', duration: '22:45', type: 'comedy', url: this.getAudioUrl('comedy') },
+                { id: 3, title: '脱口秀 - 幽默时刻', desc: '轻松幽默的脱口秀节目', duration: '18:10', type: 'comedy', url: this.getAudioUrl('comedy') }
+            );
+        } else {
+            results.push(
+                { id: 1, title: `搜索结果 - ${query}`, desc: '根据您的搜索生成的个性化内容', duration: '3:30', type: 'general', url: this.getAudioUrl('general') },
+                { id: 2, title: `相关内容 - ${query}`, desc: '与您的需求高度匹配的内容', duration: '4:15', type: 'general', url: this.getAudioUrl('general') },
+                { id: 3, title: `推荐内容 - ${query}`, desc: '根据您的喜好特别推荐', duration: '5:20', type: 'general', url: this.getAudioUrl('general') }
+            );
         }
         
-        if (pauseBtn) {
-            pauseBtn.addEventListener('click', () => this.pause());
-        }
-        
-        if (nextBtn) {
-            nextBtn.addEventListener('click', () => this.next());
-        }
-
-        // 音频播放器事件
-        if (this.audioPlayer) {
-            this.audioPlayer.addEventListener('ended', () => {
-                this.next();
-            });
+        return results;
+    }
+    
+    // 播放音频
+    async playAudio(url, title) {
+        try {
+            // 在实际实现中，这里会连接到真实的音频播放器
+            console.log(`准备播放音频: ${title} (${url})`);
             
-            this.audioPlayer.addEventListener('error', (e) => {
-                console.error('音频播放错误:', e);
-                this.handleAudioError();
-            });
+            // 模拟播放过程
+            this.currentTrack = { url, title };
+            this.isPlaying = true;
+            
+            return true;
+        } catch (error) {
+            console.error('播放音频时出错:', error);
+            return false;
         }
     }
-
-    async play() {
-        if (this.audioPlayer && this.currentTrack) {
-            try {
-                await this.audioPlayer.play();
-                this.isPlaying = true;
-                this.updatePlayButton();
-                console.log('开始播放:', this.currentTrack.title);
-            } catch (error) {
-                console.error('播放失败:', error);
-                this.handleAudioError();
-            }
-        }
+    
+    // 停止播放
+    stopAudio() {
+        this.isPlaying = false;
+        this.currentTrack = null;
     }
-
-    pause() {
-        if (this.audioPlayer) {
-            this.audioPlayer.pause();
-            this.isPlaying = false;
-            this.updatePlayButton();
-            console.log('暂停播放');
-        }
-    }
-
-    next() {
-        this.currentTrackIndex = (this.currentTrackIndex + 1) % this.playlist.length;
-        this.loadCurrentTrack();
-        
-        if (this.isPlaying) {
-            setTimeout(() => this.play(), 100);
-        }
-        
-        console.log('切换到下一首:', this.getCurrentTrack().title);
-    }
-
-    previous() {
-        this.currentTrackIndex = (this.currentTrackIndex - 1 + this.playlist.length) % this.playlist.length;
-        this.loadCurrentTrack();
-        
-        if (this.isPlaying) {
-            setTimeout(() => this.play(), 100);
-        }
-        
-        console.log('切换到上一首:', this.getCurrentTrack().title);
-    }
-
-    loadCurrentTrack() {
-        this.currentTrack = this.getCurrentTrack();
-        
-        if (this.audioPlayer && this.currentTrack) {
-            // 由于是示例，我们使用一个模拟的音频URL
-            this.audioPlayer.src = this.generateDemoAudio();
-            this.audioPlayer.load();
-            this.updateTrackInfo();
-        }
-    }
-
-    getCurrentTrack() {
-        return this.playlist[this.currentTrackIndex];
-    }
-
-    generateDemoAudio() {
-        // 生成一个简单的音频数据URL用于演示
-        // 实际使用时应该使用真实的音频文件URL
-        return 'data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYIG2m98OScTgwOUarm7blmGgU7k9n1unEiBC13yO/eizEIHWq+8+OWT';
-    }
-
-    updatePlayButton() {
-        const playBtn = document.getElementById('playBtn');
-        const pauseBtn = document.getElementById('pauseBtn');
-        
-        if (playBtn && pauseBtn) {
-            if (this.isPlaying) {
-                playBtn.style.display = 'none';
-                pauseBtn.style.display = 'inline-block';
-            } else {
-                playBtn.style.display = 'inline-block';
-                pauseBtn.style.display = 'none';
-            }
-        }
-    }
-
-    updateTrackInfo() {
-        // 更新曲目信息显示
-        const trackInfo = document.querySelector('.current-track');
-        if (trackInfo && this.currentTrack) {
-            trackInfo.innerHTML = `
-                <div class="track-title">${this.currentTrack.title}</div>
-                <div class="track-artist">${this.currentTrack.artist}</div>
-            `;
-        }
-    }
-
-    handleAudioError() {
-        console.log('音频加载失败，使用模拟播放');
-        // 这里可以添加错误处理逻辑，比如显示错误消息
-        this.showError('音频加载失败，请检查网络连接');
-    }
-
-    showError(message) {
-        // 创建错误提示
-        const errorDiv = document.createElement('div');
-        errorDiv.style.cssText = `
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(255, 107, 107, 0.9);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 20px;
-            z-index: 1000;
-            font-size: 14px;
-        `;
-        errorDiv.textContent = message;
-        document.body.appendChild(errorDiv);
-        
-        setTimeout(() => {
-            if (document.body.contains(errorDiv)) {
-                document.body.removeChild(errorDiv);
-            }
-        }, 3000);
-    }
-
-    // 添加音量控制
-    setVolume(volume) {
-        if (this.audioPlayer) {
-            this.audioPlayer.volume = Math.max(0, Math.min(1, volume));
-        }
-    }
-
-    // 获取当前播放时间
-    getCurrentTime() {
-        return this.audioPlayer ? this.audioPlayer.currentTime : 0;
-    }
-
-    // 获取音频总时长
-    getDuration() {
-        return this.audioPlayer ? this.audioPlayer.duration : 0;
-    }
-
-    // 跳转到指定时间
-    seekTo(time) {
-        if (this.audioPlayer) {
-            this.audioPlayer.currentTime = time;
+    
+    // 检查音频URL是否有效
+    async validateAudioUrl(url) {
+        try {
+            const response = await fetch(url, { method: 'HEAD' });
+            return response.ok;
+        } catch (error) {
+            console.warn(`无法验证音频URL: ${url}`, error);
+            return false;
         }
     }
 }
 
-// 初始化音频管理器
-const audioManager = new AudioManager();
-
-// 添加键盘快捷键支持
-document.addEventListener('keydown', (e) => {
-    switch(e.code) {
-        case 'Space':
-            e.preventDefault();
-            if (audioManager.isPlaying) {
-                audioManager.pause();
-            } else {
-                audioManager.play();
-            }
-            break;
-        case 'ArrowRight':
-            audioManager.next();
-            break;
-        case 'ArrowLeft':
-            audioManager.previous();
-            break;
-    }
-});
-
-// 页面加载完成后的初始化
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('Radio AI Healing - 音频管理器已初始化');
-    console.log('播放列表:', audioManager.playlist.map((track, index) => `${index + 1}. ${track.title}`).join('\n'));
-});
+// 导出 AudioManager 类
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = AudioManager;
+} else {
+    window.AudioManager = AudioManager;
+}
