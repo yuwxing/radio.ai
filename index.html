@@ -914,25 +914,21 @@
                     // 生成AI语音内容
                     const speechResult = await aiVoiceGen.generateSpeech(content);
                     
-                    audioPlayer.src = speechResult.audioUrl;
-                    audioPlayer.volume = volumeSlider.value;
-                    
-                    // 尝试播放
-                    const playPromise = audioPlayer.play();
-                    
-                    if (playPromise !== undefined) {
-                        playPromise.catch(error => {
-                            console.log('播放被阻止，可能是由于自动播放策略:', error);
-                            // 如果播放失败，至少更新UI
-                            updateStatus(`已生成内容，但需要用户交互才能播放`);
-                        });
-                    }
-                    
                     // 创建可视化效果
                     createVisualizer();
                     
+                    // 设置音频源但不自动播放（遵守浏览器自动播放策略）
+                    audioPlayer.src = speechResult.audioUrl;
+                    audioPlayer.volume = volumeSlider.value;
+                    
                     // 更新状态
-                    updateStatus(`正在播放AI生成内容: "${content.substring(0, 30)}..."`);
+                    updateStatus(`AI内容已生成，点击播放按钮开始播放: "${content.substring(0, 30)}..."`);
+                    
+                    // 不自动播放，而是等待用户交互
+                    // 显示提示让用户知道需要点击播放按钮
+                    setTimeout(() => {
+                        updateStatus(`提示: 请在下方点击播放按钮开始播放AI生成的内容`);
+                    }, 1000);
                 } catch (error) {
                     console.error('播放生成内容时出错:', error);
                     updateStatus(`播放内容时出错: ${error.message}`);
@@ -1076,6 +1072,21 @@
             volumeSlider.addEventListener('input', function() {
                 audioPlayer.volume = this.value;
                 updateStatus(`音量已调整至 ${(this.value * 100).toFixed(0)}%`);
+            });
+            
+            // 监听音频播放事件
+            audioPlayer.addEventListener('play', function() {
+                updateStatus(`正在播放AI生成内容...`);
+            });
+            
+            // 监听音频暂停事件
+            audioPlayer.addEventListener('pause', function() {
+                updateStatus(`播放已暂停`);
+            });
+            
+            // 监听音频结束事件
+            audioPlayer.addEventListener('ended', function() {
+                updateStatus(`播放已完成`);
             });
             
             // 初始化语音选项
