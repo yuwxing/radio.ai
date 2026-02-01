@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radio.AI - 登录</title>
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #ff6b6b;
+            --light-bg: rgba(255, 255, 255, 0.1);
+            --dark-bg: rgba(0, 0, 0, 0.2);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            min-height: 100vh;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .login-container {
+            background: var(--light-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        
+        .logo {
+            margin-bottom: 30px;
+        }
+        
+        .logo h1 {
+            font-size: 2.5em;
+            background: linear-gradient(45deg, #fff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+        
+        .logo p {
+            opacity: 0.8;
+            font-size: 1.1em;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #fff;
+        }
+        
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: var(--dark-bg);
+            color: white;
+            font-size: 16px;
+            outline: none;
+        }
+        
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        .btn-login {
+            background: linear-gradient(45deg, var(--accent-color), #ee5a24);
+            color: white;
+        }
+        
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn-register {
+            background: transparent;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn-register:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .divider {
+            margin: 25px 0;
+            position: relative;
+            text-align: center;
+        }
+        
+        .divider::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.2);
+            z-index: 1;
+        }
+        
+        .divider span {
+            position: relative;
+            z-index: 2;
+            background: var(--light-bg);
+            padding: 0 15px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .demo-login {
+            margin-top: 20px;
+        }
+        
+        .demo-text {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 15px;
+            font-size: 0.9em;
+        }
+        
+        .welcome-text {
+            margin-bottom: 20px;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+        
+        .features {
+            background: var(--dark-bg);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .features h3 {
+            color: #fff;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .features ul {
+            padding-left: 20px;
+            margin: 0;
+        }
+        
+        .features li {
+            margin-bottom: 8px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <h1>📻 Radio.AI</h1>
+            <p>智能语音电台</p>
+        </div>
+        
+        <div class="welcome-text">
+            欢迎使用 Radio.AI - 用语音控制的智能电台
+        </div>
+        
+        <div class="features">
+            <h3>功能特色：</h3>
+            <ul>
+                <li>语音控制播放</li>
+                <li>智能内容推荐</li>
+                <li>海量音频资源</li>
+                <li>个性化体验</li>
+            </ul>
+        </div>
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">用户名</label>
+                <input type="text" id="username" placeholder="请输入用户名" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">密码</label>
+                <input type="password" id="password" placeholder="请输入密码" required>
+            </div>
+            
+            <button type="submit" class="btn btn-login">登录</button>
+        </form>
+        
+        <div class="divider">
+            <span>或</span>
+        </div>
+        
+        <button id="guestLogin" class="btn btn-register">游客模式访问</button>
+        
+        <div class="demo-login">
+            <div class="demo-text">演示账号: demo / 密码: radio123</div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('loginForm');
+            const guestLoginBtn = document.getElementById('guestLogin');
+            
+            // 处理表单提交
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                
+                // 简单验证（实际应用中应使用安全的认证）
+                if ((username === 'demo' && password === 'radio123') || 
+                    (username.trim() !== '' && password.length >= 3)) {
+                    // 设置用户信息到本地存储
+                    localStorage.setItem('radioAIUser', JSON.stringify({
+                        username: username,
+                        loginTime: new Date().toISOString()
+                    }));
+                    
+                    // 跳转到主应用页面
+                    window.location.href = 'index.html';
+                } else {
+                    alert('用户名或密码错误！\n演示账号: demo / 密码: radio123');
+                }
+            });
+            
+            // 游客登录
+            guestLoginBtn.addEventListener('click', function() {
+                // 设置临时用户信息
+                localStorage.setItem('radioAIUser', JSON.stringify({
+                    username: '游客_' + Date.now(),
+                    loginTime: new Date().toISOString(),
+                    isGuest: true
+                }));
+                
+                // 跳转到主应用页面
+                window.location.href = 'index.html';
+            });
+            
+            // 回车键登录
+            document.getElementById('password').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    loginForm.dispatchEvent(new Event('submit'));
+                }
+            });
+        });
+    </script>
+</body>
+</html>
